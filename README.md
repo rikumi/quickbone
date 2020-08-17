@@ -54,7 +54,7 @@ QuickBone 是基于 Kbone 构建的轻量化小程序组件，从 Kbone 中剔�
         new MiniCssExtractPlugin({
           filename: '[name].wxss',
         }),
-        new MpWebpackPlugin(), // 编译时零配置，只保留 Kbone 的部分运行时配置，在 wxml 中使用组建时设置
+        new QuickBonePlugin(), // 编译时零配置，只保留 Kbone 的部分运行时配置，在 wxml 中使用组建时设置
       ],
     };
     ```
