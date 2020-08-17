@@ -116,6 +116,11 @@ QuickBone 是基于 Kbone 构建的轻量化小程序组件，从 Kbone 中剔�
     });
     ```
 
+    ```css
+    /* /pages/demo/demo.wxss */
+    @import './demo-web.wxss';
+    ```
+
 ## 组件参数
 
 - `base-url`: 页面的地址，不含参数（search 和 hash）；
