@@ -96,7 +96,7 @@ class Location extends EventTarget {
      * 检查 url 变化是否需要跳转
      */
   $$redirect(oldValues) {
-    const { window } = cache[this.$_pageId];
+    const component = cache[this.$_pageId];
 
     const jumpUrl = this.href;
 
@@ -108,12 +108,9 @@ class Location extends EventTarget {
     this.$_search = oldValues.search;
     this.$_hash = oldValues.hash;
 
-    // TODO 改成对根组件抛事件
-    window.$$trigger('navigation', {
-      event: {
-        url: jumpUrl,
-        type: 'jump',
-      },
+    component.triggerEvent('navigate', {
+      url: jumpUrl,
+      type: 'jump',
     });
   }
 
@@ -123,14 +120,11 @@ class Location extends EventTarget {
   $$open(url) {
     url = tool.completeURL(url, this.origin, true);
 
-    const { window } = cache[this.$_pageId];
+    const component = cache[this.$_pageId];
 
-    // TODO 改成对根组件抛事件
-    window.$$trigger('navigation', {
-      event: {
-        url,
-        type: 'open',
-      },
+    component.triggerEvent('navigate', {
+      url,
+      type: 'open',
     });
   }
 
@@ -483,8 +477,8 @@ class Location extends EventTarget {
   }
 
   reload() {
-    // TODO 让组件重新加载
-    throw Error('location.reload() is not implemented');
+    const component = cache[this.$_pageId];
+    component.reload();
   }
 
   replace(value) {

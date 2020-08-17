@@ -6,9 +6,16 @@
 
 [Kbone](https://github.com/Tencent/kbone) 是一个重量级的 Web 转小程序脚手架，它可以基于现有的 Web 项目生成小程序项目，但 Kbone 托管了整个小程序或整个小程序页面，使 Web 和小程序混合开发极其不便。
 
-QuickBone 是基于 Kbone 构建的轻量化小程序组件，从 Kbone 中剔除了小程序级、页面级的配置项和生成逻辑，专注于做一个小程序组件。页面可以在合适的时机初始化组件，并在组件内部执行打包好的 Web 项目，真正做到**快速替换现有 `web-view` 逻辑，对现有小程序代码零侵入**。
+QuickBone 是基于 Kbone 构建的轻量化小程序组件，从 Kbone 中剔除了小程序级、页面级的配置项和生成逻辑，专注于做一个小程序组件。
 
-因此，在 QuickBone 中，你终于可以**在小程序原生或第三方框架的开发方式中，无缝嵌入 Web 项目代码，让 Web 项目在你想要的时候以你想要的方式加载，而无需关注实现原理**。
+## 特点
+
+- 继承 Kbone 完整 DOM/BOM 实现
+- 根据实际使用场景，补全了绝大多数缺失的全局对象和 WebSocket 类
+- 不做脚手架，将小程序和小程序页面的控制权还给开发者
+  - 不限制项目结构、小程序分包，快速融入现有项目
+  - 不限制页面内其它组件、样式、生命周期，快速复用现有 `web-view` 页面逻辑
+  - 初始化逻辑清晰，`window`、`document` 双向透明，加载过程和加载时机可控，灵活性接近 `iframe`
 
 ## 用法
 
@@ -86,6 +93,7 @@ QuickBone 是基于 Kbone 构建的轻量化小程序组件，从 Kbone 中剔�
 
     ```xml
     <!-- /pages/demo/demo.wxml -->
+    <!-- 可自行决定合适的时机渲染 quickbone 组件 -->
     <quickbone base-url="https://docs.qq.com/desktop/m/" query="{{ options }}" bind:ready="onQuickBoneReady"></quickbone>
     ```
 
@@ -103,3 +111,44 @@ QuickBone 是基于 Kbone 构建的轻量化小程序组件，从 Kbone 中剔�
       },
     });
     ```
+
+## 组件参数
+
+- `base-url`: 页面的地址，不含参数（search 和 hash）；
+- `query`: 页面的参数对象，为了兼容小程序 `options` 格式，其中所有的 value 应当经过一次 `encodeURIComponent`；
+- `wx-component`: 同 Kbone [`runtime.wxComponent`](https://wechat-miniprogram.github.io/kbone/docs/config/#runtime-wxcomponent)；
+- `persist-cookie`: 是否持久化页面内的 Cookie，默认为 `true`；
+- `dom-sub-tree-level`: 同 Kbone [`optimization.domSubTreeLevel`](https://wechat-miniprogram.github.io/kbone/docs/config/#optimization-domsubtreelevel)；
+- `set-data-mode`: 同 Kbone [`optimization.setDataMode`](https://wechat-miniprogram.github.io/kbone/docs/config/#optimization-setdatamode)；
+
+其它 Kbone 配置不再支持，均采用默认实现；[DOM/BOM 扩展 API](https://wechat-miniprogram.github.io/kbone/docs/domextend/) 中，目前仅保证支持 `window.$$trigger`、`window.$$getComputedStyle`、`dom.$$getBoundingClientRect`、`canvas.$$prepare`，其它 Web 中不存在的特殊接口、事件均已删除或有可能会在未来版本中被删除。
+
+## 组件事件
+
+- `bind:ready`: 虚拟 DOM/BOM 创建完成的事件，`e.detail` 为 `{ window, document }`；
+- `bind:navigate`: 页面试图进行跳转或打开新页面的事件（默认不会做任何处理），`e.detail` 为 `{ url, type }`，其中 `type === 'open'` 为调用 `window.open`；`type === 'jump'` 为当前页跳转。
+
+## 注意点
+
+1.  由于需要依赖页面中定义的事件，目前不会自动监听页面的全局滚动、下拉刷新和上拉加载，如需监听，可以在组件 `bind:ready` 中保存 `window` 对象，然后参考 Kbone 中的页面事件写法：
+
+    ```js
+    onPageScroll({ scrollTop }) {
+      if (this.window) {
+        this.window.document.documentElement.$$scrollTop = scrollTop || 0;
+        this.window.$$trigger('scroll');
+      }
+    },
+    onPullDownRefresh() {
+      if (this.window) {
+        this.window.$$trigger('pulldownrefresh');
+      }
+    },
+    onReachBottom() {
+      if (this.window) {
+        this.window.$$trigger('reachbottom');
+      }
+    },
+    ```
+
+2.  Kbone 相关的注意点可以参见 [Kbone Q&A](https://wechat-miniprogram.github.io/kbone/docs/qa/)，相关限制不再赘述。
