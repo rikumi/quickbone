@@ -115,6 +115,14 @@ class Location extends EventTarget {
   }
 
   /**
+     * 初始化
+     */
+  $$init(baseUrl, query) {
+    this.reset(`${baseUrl}?${Object.keys(query).map(k => `${k}=${query[k]}`)
+      .join('&')}`);
+  }
+
+  /**
      * 打开一个新页面
      */
   $$open(url) {

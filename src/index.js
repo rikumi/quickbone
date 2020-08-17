@@ -34,6 +34,11 @@ Component({
     bodyClass: 'h5-body miniprogram-root',
     bodyStyle: '',
   },
+  observers: {
+    'baseUrl, query'(baseUrl, query) {
+      this.window.location.$$init(baseUrl, query);
+    },
+  },
   lifetimes: {
     attached() {
       this.handleLoad();
@@ -59,7 +64,7 @@ Component({
   },
   methods: {
     handleLoad() {
-      const { query } = this.properties;
+      const { baseUrl, query } = this.properties;
       const pageId = `p-${tool.getId()}`;
       cache[pageId] = this;
 
@@ -72,8 +77,7 @@ Component({
       this.document = document;
       this.query = query;
       this.nodeIdMap = nodeIdMap;
-
-      this.window.$$miniprogram.init();
+      this.window.location.$$init(baseUrl, query);
 
       this.document.documentElement.addEventListener('$$childNodesUpdate', () => {
         const domNode = this.document.body;

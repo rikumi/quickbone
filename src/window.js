@@ -1,6 +1,5 @@
 const History = require('./bom/history');
 const Location = require('./bom/location');
-const Miniprogram = require('./bom/miniprogram');
 const Navigator = require('./bom/navigator');
 const Performance = require('./bom/performance');
 const Screen = require('./bom/screen');
@@ -60,7 +59,6 @@ class Window extends EventTarget {
     this.$_navigator = new Navigator();
     this.$_screen = new Screen();
     this.$_history = new History(this.$_location);
-    this.$_miniprogram = new Miniprogram(pageId);
     this.$_localStorage = new LocalStorage(this);
     this.$_sessionStorage = new SessionStorage(this);
     this.$_performance = new Performance(timeOrigin);
@@ -202,13 +200,6 @@ class Window extends EventTarget {
     }
 
     return { prototype, method, type };
-  }
-
-  /**
-     * 暴露给小程序用的对象
-     */
-  get $$miniprogram() {
-    return this.$_miniprogram;
   }
 
   /**
