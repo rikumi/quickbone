@@ -49,7 +49,6 @@ QuickBone 是基于 Kbone 构建的轻量化小程序组件，从 Kbone 中剔�
               // 小程序 WXSS 不能引用代码包里的图片，只能全都 base64 了
               loader.options = {
                 limit: 1048576,
-                name: '[name]_[hash:hex:6].[ext]',
                 emitFile: false,
               };
             }
