@@ -91,15 +91,12 @@ class Window extends EventTarget {
     // react 环境兼容
     this.HTMLIFrameElement = function () { };
 
-    try {
-      Object.defineProperty(wx, 'window', { get: () => getCurrentPages().slice(-1)[0].window });
-      console.log(
-        '%cQuickBone',
-        'color:#fff;font-weight:bold;background:#f28c06;padding:2px 5px',
-        '当前页面采用 QuickBone 构建，为方便调试，可使用 wx.window 得到当前页面的虚拟 window 对象。',
-        this
-      );
-    } catch (e) {}
+    console.log(
+      '%cQuickBone',
+      'color:#fff;font-weight:bold;background:#f28c06;padding:2px 5px',
+      '当前页面采用 QuickBone 构建，为方便调试，可使用 global.window 得到当前页面的虚拟 window 对象。',
+      this
+    );
   }
 
   /**

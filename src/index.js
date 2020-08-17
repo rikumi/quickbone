@@ -45,15 +45,14 @@ Component({
   pageLifetimes: {
     show() {
       // 方便调试
-      global.$$runtime = {
-        window: this.window,
-        document: this.document,
-      };
+      global.window = this.window;
+      global.document = this.document;
       this.document.$$visibilityState = 'visible';
       this.document.$$trigger('visibilitychange');
     },
     hide() {
-      global.$$runtime = null;
+      global.window = null;
+      global.document = null;
       this.document.$$visibilityState = 'hidden';
       this.document.$$trigger('visibilitychange');
     },
@@ -108,7 +107,8 @@ Component({
       this.window.$$destroy();
 
       delete cache[this.pageId];
-      global.$$runtime = null;
+      global.window = null;
+      global.document = null;
 
       this.pageId = null;
       this.nodeIdMap = null;
