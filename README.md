@@ -100,6 +100,11 @@ QuickBone 是基于 Kbone 构建的轻量化小程序组件，从 Kbone 中剔�
     <quickbone base-url="https://docs.qq.com/desktop/m/" query="{{ options }}" bind:ready="onQuickBoneReady"></quickbone>
     ```
 
+    ```css
+    /* /pages/demo/demo.wxss */
+    @import './demo-web.wxss';
+    ```
+
     ```js
     // /pages/demo/demo.js
     Page({
@@ -114,11 +119,6 @@ QuickBone 是基于 Kbone 构建的轻量化小程序组件，从 Kbone 中剔�
         require('./demo-web.js')(window, document);
       },
     });
-    ```
-
-    ```css
-    /* /pages/demo/demo.wxss */
-    @import './demo-web.wxss';
     ```
 
 ## 组件参数
