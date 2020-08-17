@@ -36,7 +36,11 @@ QuickBone 是基于 Kbone 构建的轻量化小程序组件，从 Kbone 中剔�
       },
       target: 'web',
       optimization: {
-        // 参见 Kbone 的配置：https://wechat-miniprogram.github.io/kbone/docs/guide/tutorial.html
+        runtimeChunk: false, // 必需字段，不能修改
+        splitChunks: false,
+        minimizer: [
+          // 请参见 Kbone 的配置：https://wechat-miniprogram.github.io/kbone/docs/guide/tutorial.html
+        ],
       },
       module: {
         rules: baseWebpackConfig.module.rules.map((rule) => {
@@ -61,7 +65,7 @@ QuickBone 是基于 Kbone 构建的轻量化小程序组件，从 Kbone 中剔�
         new MiniCssExtractPlugin({
           filename: '[name].wxss',
         }),
-        new QuickBonePlugin(), // 编译时零配置，只保留 Kbone 的部分运行时配置，在 wxml 中使用组建时设置
+        new QuickBonePlugin(), // 零配置，用于转换样式并给 JS 文件外包裹一层函数
       ],
     };
     ```
@@ -98,6 +102,7 @@ QuickBone 是基于 Kbone 构建的轻量化小程序组件，从 Kbone 中剔�
     ```
 
     ```js
+    // /pages/demo/demo.js
     Page({
       data: {
         options: {},
