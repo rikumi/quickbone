@@ -1,0 +1,10 @@
+node_modules
+yarn-error.log
+yarn.lock
+.DS_Store
+
+*.log
+**/dist
+
+miniprogram_dist
+miniprogram_dev

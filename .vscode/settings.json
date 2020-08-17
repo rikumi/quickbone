@@ -1,0 +1,13 @@
+{
+  "editor.formatOnType": true,
+  "editor.formatOnPaste": true,
+  "editor.detectIndentation": false,
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "eslint.format.enable": true,
+  "eslint.validate": ["javascript"],
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "javascript.implicitProjectConfig.checkJs": false
+}
