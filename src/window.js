@@ -92,7 +92,6 @@ class Window extends EventTarget {
     console.log(
       '%cQuickBone',
       'color:#fff;font-weight:bold;background:#f28c06;padding:2px 5px',
-      'global.window:',
       this
     );
   }

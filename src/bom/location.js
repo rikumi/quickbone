@@ -478,7 +478,7 @@ class Location extends EventTarget {
 
   reload() {
     const component = cache[this.$_pageId];
-    component.reload();
+    component.handleReload();
   }
 
   replace(value) {

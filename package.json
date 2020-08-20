@@ -1,6 +1,6 @@
 {
   "name": "quickbone",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "web's adapter for miniprogram",
   "scripts": {},
   "miniprogram": "src",

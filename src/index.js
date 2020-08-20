@@ -32,6 +32,9 @@ Component({
   },
   observers: {
     url() {
+      if (!this.window || !this.document) {
+        return;
+      }
       this.handleReload();
     },
   },
