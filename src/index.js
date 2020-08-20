@@ -5,12 +5,8 @@ const Window = require('./window');
 
 Component({
   properties: {
-    baseUrl: {
+    url: {
       type: String,
-    },
-    query: {
-      type: Object,
-      value: {},
     },
     wxComponent: {
       type: String,
@@ -35,8 +31,8 @@ Component({
     bodyStyle: '',
   },
   observers: {
-    'baseUrl, query'(baseUrl, query) {
-      this.window && this.window.location.$$init(baseUrl, query);
+    url() {
+      this.handleReload();
     },
   },
   lifetimes: {
@@ -64,7 +60,7 @@ Component({
   },
   methods: {
     handleLoad() {
-      const { baseUrl, query } = this.properties;
+      const { url } = this.properties;
       const pageId = `p-${tool.getId()}`;
       cache[pageId] = this;
 
@@ -75,9 +71,8 @@ Component({
       this.pageId = pageId;
       this.window = window;
       this.document = document;
-      this.query = query;
       this.nodeIdMap = nodeIdMap;
-      this.window.location.$$init(baseUrl, query);
+      this.window.location.$$reset(url);
 
       this.document.documentElement.addEventListener('$$childNodesUpdate', () => {
         const domNode = this.document.body;
@@ -120,7 +115,6 @@ Component({
       this.window = null;
       this.document = null;
       this.app = null;
-      this.query = null;
 
       this.setData({
         pageId: '',

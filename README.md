@@ -97,7 +97,7 @@ QuickBone 是基于 Kbone 构建的轻量化小程序组件，从 Kbone 中剔�
     ```xml
     <!-- /pages/demo/demo.wxml -->
     <!-- 可自行决定合适的时机渲染 quickbone 组件 -->
-    <quickbone base-url="https://docs.qq.com/desktop/m/" query="{{ options }}" bind:ready="onQuickBoneReady"></quickbone>
+    <quickbone wx:if="{{url}}" url="{{url}}" bind:ready="onQuickBoneReady"></quickbone>
     ```
 
     ```css
@@ -109,12 +109,16 @@ QuickBone 是基于 Kbone 构建的轻量化小程序组件，从 Kbone 中剔�
     // /pages/demo/demo.js
     Page({
       data: {
-        options: {},
+        url: '',
       },
       onLoad(options) {
-        this.setData({ options });
+        // 页面加载后，用 options 构造虚拟 URL，开始初始化 QuickBone
+        this.setData({
+          url: 'https://docs.qq.com/desktop/m/?' + Object.key(options).map(k => `${k}=${options[key]}`).join('&'),
+        });
       },
       onQuickBoneReady(e) {
+        // QuickBone 环境初始化完成后，在 QuickBone 环境中开始执行 Web 代码
         const { window, document } = e.detail;
         require('./demo-web.js')(window, document);
       },
@@ -123,8 +127,7 @@ QuickBone 是基于 Kbone 构建的轻量化小程序组件，从 Kbone 中剔�
 
 ## 组件参数
 
-- `base-url`: 页面的地址，不含参数（search 和 hash）；
-- `query`: 页面的参数对象，为了兼容小程序 `options` 格式，其中所有的 value 应当经过一次 `encodeURIComponent`；
+- `url`: 页面的虚拟地址；
 - `wx-component`: 同 Kbone [`runtime.wxComponent`](https://wechat-miniprogram.github.io/kbone/docs/config/#runtime-wxcomponent)；
 - `persist-cookie`: 是否持久化页面内的 Cookie，默认为 `true`；
 - `dom-sub-tree-level`: 同 Kbone [`optimization.domSubTreeLevel`](https://wechat-miniprogram.github.io/kbone/docs/config/#optimization-domsubtreelevel)；
