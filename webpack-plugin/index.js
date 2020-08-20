@@ -18,7 +18,7 @@ const globalVars = [
   'pageXOffset', 'pageYOffset', 'parent', 'performance', 'personalbar', 'postMessage', 'print', 'prompt',
   'releaseEvents', 'removeEventListener', 'requestAnimationFrame', 'resizeBy', 'resizeTo', 'root',
   'screen', 'screenLeft', 'screenTop', 'screenX', 'screenY', 'scroll', 'scrollbars', 'scrollBy', 'scrollTo', 'scrollX', 'scrollY',
-  'self', 'sessionStorage', 'stop', 'setImmediate', 'status', 'statusbar', 'toolbar', 'top', '__wxjs_environment',
+  'self', 'sessionStorage', 'stop', 'setImmediate', 'status', 'statusbar', 'toolbar', 'top', 'wx', '__wxjs_environment',
 ];
 
 /**
