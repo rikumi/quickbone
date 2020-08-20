@@ -36,7 +36,7 @@ Component({
   },
   observers: {
     'baseUrl, query'(baseUrl, query) {
-      this.window.location.$$init(baseUrl, query);
+      this.window && this.window.location.$$init(baseUrl, query);
     },
   },
   lifetimes: {
