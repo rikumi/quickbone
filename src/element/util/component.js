@@ -198,6 +198,11 @@ const wxComponentMap = {
         return dealWithBoolValue(domNode, 'refresher-triggered');
       },
     }, {
+      name: 'throttle',
+      get(domNode) {
+        return dealWithBoolValue(domNode, 'throttle', true);
+      },
+    }, {
       name: 'enhanced',
       get(domNode) {
         return dealWithBoolValue(domNode, 'enhanced');
