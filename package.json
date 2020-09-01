@@ -1,8 +1,9 @@
 {
   "name": "quickbone",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "web's adapter for miniprogram",
   "scripts": {},
+  "main": "src",
   "miniprogram": "src",
   "repository": {
     "type": "git",
