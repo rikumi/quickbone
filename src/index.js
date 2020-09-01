@@ -77,6 +77,10 @@ Component({
       this.nodeIdMap = nodeIdMap;
       this.window.location.$$reset(url);
 
+      this.window.addEventListener('message', (e) => {
+        this.triggerEvent('message', e);
+      });
+
       this.document.documentElement.addEventListener('$$childNodesUpdate', () => {
         const domNode = this.document.body;
         const data = {
